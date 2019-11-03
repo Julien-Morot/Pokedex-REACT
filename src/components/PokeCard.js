@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Pokelist from './PokeList';
 
 class PokeCard extends Component {
     state = {

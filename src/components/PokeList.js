@@ -3,14 +3,23 @@ import PokeCard from './PokeCard';
 import axios from 'axios';
 import './PokeList.css';
 import Form from './Form';
-import { cpus } from 'os';
 
 class Pokelist extends Component {
   state = {
+    value: "",
     url: 'https://pokeapi.co/api/v2/pokemon',
     pokemon: null,
+    data:[]
   };
 
+  handleSubmit = this.handleSubmit.bind(this);
+
+  handleSubmit(ev) {
+    ev.preventDefault();
+    this.setState({
+      value: new FormData(ev.currentTarget).get("filter")
+    });
+  }
 
   async componentDidMount() {
     const res = await axios.get(this.state.url);
@@ -18,21 +27,30 @@ class Pokelist extends Component {
   }
 
   render() {
+
+    const PokeFiltre = this.state.data.filter(pokemon =>
+      pokemon.name
+      .toLowerCase()
+      .includes(this.state.value.toLowerCase())
+      );
     return (
       <div>
-        <Form />
+        <Form handleSubmit={this.handleSubmit}
+        value={this.state.value} />
         {this.state.pokemon ? (
           <div className="row">
             {this.state.pokemon.map(pokemon => (
               <PokeCard
-                key={pokemon.name}
+               key={pokemon.name}
                 name={pokemon.name}
                 url={pokemon.url}
+                data={PokeFiltre}
+
               />
             ))}
           </div>
         ) : (
-          <h1>Loading Pokemon</h1>
+          <h1>Chargement Pokemon</h1>
         )}
       </div>
     );

@@ -1,7 +1,6 @@
 import React from 'react';
 
-const Form = ({ handleSubmit, value }) => (
-    <>
+const Form = ({ handleSubmit }) => (
     <form onSubmit={handleSubmit}>
         <label htmlFor="filter">Filtrer</label>
         <input
@@ -11,8 +10,6 @@ const Form = ({ handleSubmit, value }) => (
         />
         <input type="submit" value="Filtrer" />
     </form>
-    <p>{value}</p>
-    </>
 
 );
 
